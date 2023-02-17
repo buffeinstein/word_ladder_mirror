@@ -20,7 +20,7 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
 
     while len(q) > 0:
         current = q.popleft()
-        for w in dictionary:
+        for w in dictionary[:]:
             if _adjacent(w, current[-1]) and w not in current:
                 if w == end_word:
                     current.append(w)
@@ -28,7 +28,7 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
                     for i in range(len(current) - 2):
                         if _adjacent(current[i], current[i + 2]):
                             current2.remove(current[i + 1])
-                    print(current2)
+                    print("current2=", current2)
                     return current2
                 nextt = copy.copy(current)
                 nextt.append(w)
