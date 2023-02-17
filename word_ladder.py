@@ -36,7 +36,7 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
     if start_word == end_word:
         return [start_word]
     stack1 = [start_word]
-    q = deque([])
+    q = deque()
     q.append(stack1)
     dictionary.remove(start_word)
 
@@ -50,7 +50,7 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
                 nextt = copy.copy(current)
                 nextt.append(w)
                 q.append(nextt)
-
+                dictionary.remove(w)
     return None
 
 
