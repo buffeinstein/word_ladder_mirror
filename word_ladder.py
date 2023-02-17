@@ -4,37 +4,16 @@ import copy
 
 
 def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
-    '''
-    Returns a list satisfying the following properties:
-
-    1. the first element is `start_word`
-    2. the last element is `end_word`
-    3. elements at index i and i+1 are `_adjacent`
-    4. all elements are entries in the `dictionary_file` file
-
-    For example, running the command
-    ```
-    word_ladder('stone','money')
-    ```
-    may give the output
-    ```
-    ```
-    but the possible outputs are not unique,
-    so you may also get the output
-    ```
-    ```
-    (We cannot use doctests here because the outputs are not unique.)
-
-    Whenever it is impossible to generate a word ladder between the two words,
-    the function returns `None`.
-    '''
-
     with open(dictionary_file, 'r') as f:
         text = f.read()
     dictionary = text.split()
+    
+    if len(start_word) != len(end_word):
+        return None
 
     if start_word == end_word:
         return [start_word]
+
     stack1 = [start_word]
     q = deque()
     q.append(stack1)
@@ -46,7 +25,36 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
             if _adjacent(w, current[-1]) and w not in current:
                 if w == end_word:
                     current.append(w)
-                    return current
+                    #what this code will fix:
+                    #test__word_ladder_9
+                    #test__word_ladder_8
+                    #test__word_ladder_10
+                    #what it won't:
+                    #test__word_ladder_7 will not be fixed with this
+                    #test__word_ladder_fuzz is interesting
+                    #it tests if the lengths match of list from going
+                    #forwards vs backwards from the same 2 words 
+                    #sometimes-  the length is the same because they
+                    #will be reversed lists (ggod)
+                    #other times - the list lenths match, but 
+                    #not the lists themselves (bad?)
+                    #what this code is fixing:
+                    #many times - the lists have one too many words
+                    #in going from higher alphabetical to lower
+                    #alphabetical, the ladder will have an unneccessary 
+                    #step
+                    #ex: 'crone', 'clone', 'clonk',x, 'clons', 'clops',
+                    #vs:'clops', 'clons', 'clone', 'crone'
+                    #due to the use of the for loop that goes
+                    #through an alphabetized dict
+                    #thus, we can use code similar to the adjacent func
+                    #this takes a list and trims it 
+                    current2 = current [:]
+                    for i in range(len(current) - 2):
+                        if _adjacent(current[i],current[i + 2]):
+                            current2.remove(current[i+1])
+                    print(current2)
+                    return current2
                 nextt = copy.copy(current)
                 nextt.append(w)
                 q.append(nextt)
