@@ -1,5 +1,5 @@
 # Word Ladders with Stacks and Queues
-[![](https://github.com/buffeinstein/cs46hw03-word_ladder/workflows/tests/badge.svg)](https://github.com/buffeinstein/cs46hw03-word_ladder/actions?query=workflow%3Atests)
+[![](https://github.com/buffeinstein/word_ladder_mirror/workflows/tests/badge.svg)](https://github.com/buffeinstein/word_ladder_mirror/actions?query=workflow%3Atests)
 
 You will implement a solution to Lewis Carroll's [word ladder game](https://en.wikipedia.org/wiki/Word_ladder).
 
